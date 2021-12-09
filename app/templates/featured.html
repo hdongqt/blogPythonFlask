@@ -1,0 +1,17 @@
+{% if featured %}
+<div class="content-section">
+  <h3>Mới nhất</h3>
+    {% for post in featured %}
+    <div class="card mb-5" style="width: 18rem;">
+      <a class="featured-post" href="{{ url_for('post', post_id=post.id) }}">
+      <img class="card-img-top" src="{{ url_for('static', filename='img/' + post.image_post) }}" alt="Card image cap"
+       style="max-height: 120px; object-fit: cover;">
+      <div class="card-body">
+        <h5 class="card-title">{{ post.title }}</h5>
+        <p class="card-text">{{ post.date_posted }}</p>
+      </div>
+    </a>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}

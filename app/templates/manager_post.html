@@ -1,0 +1,40 @@
+{% extends "layout2.html" %}
+{% block content %}
+    {% for post in posts %}
+    <article class="media content-section">
+    
+        <div class="media-body">
+          <div class="article-metadata">
+            <small class="text-muted">{{ post.date_posted.strftime('%d-%m-%Y') }}</small>
+            {% if post.author == current_user %}
+              <div>
+                <a class="btn btn-primary btn-sm mt-1 mb-1" href="{{ url_for('update_post', post_id=post.id) }}">Cập nhật</a>
+                <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Xoá</button>
+              </div>
+            {% endif %}
+          </div>
+          <h2 class="article-title">{{ post.title }}</h2>
+          <p class="article-content">{{ post.content }}</p>
+        </div>
+      </article>
+      <!-- Modal -->
+      <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteModalLabel">Xoá bài viết?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ bỏ</button>
+              <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST">
+                <button class="btn btn-danger" type="submit"> Đồng ý</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+{% endblock content %}
